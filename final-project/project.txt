@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include<unistd.h>
 enum stick_status
 {
     down = 0,
@@ -26,7 +26,7 @@ void *philosophers_problemm(void *f)
     if (ff->num_thread + 1 == ff->num)
     {
         right_lower = ff->num_thread;
-        left_higher = 0; //becuase it like a circle i do the left_higher=0
+        left_higher = 0;
         back = right_lower - 1;
     }
     else
@@ -49,7 +49,7 @@ void *philosophers_problemm(void *f)
             flag = 0;
         }
         pthread_mutex_lock(&mutex);
-        if (ff->stick[right_lower] == down && ff->stick[back] == down) // check if neighbor is not in need the secound stick
+        if (ff->stick[right_lower] == down && ff->stick[back] == down) // check if neighbor is not in need the secound stick 
         {
             if (ff->philo_stick[0] == down)
             {
@@ -67,17 +67,17 @@ void *philosophers_problemm(void *f)
             printf("philosoph:%d success pick up a secound stick\n", (ff->num_thread + 1));
             randomTime = rand() % 10 + 1;
             pthread_mutex_unlock(&mutex);
-            printf("philosoph:%d Begins to eat with time:%d\n", (ff->num_thread + 1), randomTime);
+            printf("philosoph:%ld Begins to eat with time:%d\n", (ff->num_thread + 1), randomTime);
             sleep(randomTime);
 
             printf("philosoph:%d I'm done eating with time:%d\n", (ff->num_thread + 1), randomTime);
 
             ff->philo_stick[1] = down;
             ff->philo_stick[0] = down;
-            pthread_mutex_lock(&mutex);
+              pthread_mutex_lock(&mutex);
             ff->stick[right_lower] = down;
             ff->stick[left_higher] = down;
-            pthread_mutex_unlock(&mutex);
+             pthread_mutex_unlock(&mutex);
             randomTime = rand() % 11 + 10;
             printf("philosoph:%d Begins to think with time:%d\n", (ff->num_thread + 1), randomTime);
             sleep(randomTime);
